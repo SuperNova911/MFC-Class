@@ -70,6 +70,8 @@ public:
 	COLORREF m_colorPen;
 	COLORREF m_colorBrush;
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // Practice5_1View.cpp의 디버그 버전

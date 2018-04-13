@@ -42,6 +42,8 @@ BEGIN_MESSAGE_MAP(CPractice5_1View, CView)
 	ON_UPDATE_COMMAND_UI(ID_POLYGON, &CPractice5_1View::OnUpdatePolygon)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CPractice5_1View 생성/소멸
@@ -81,14 +83,16 @@ BOOL CPractice5_1View::PreCreateWindow(CREATESTRUCT& cs)
 
 // CPractice5_1View 그리기
 
-void CPractice5_1View::OnDraw(CDC* /*pDC*/)
+void CPractice5_1View::OnDraw(CDC* pDC)
 {
 	CPractice5_1Doc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
-	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	CPen pen, *oldpen;
+	pen.CreatePen(PS_SOLID, 1, m_colorPen);
+	oldpen = pDC->SelectObject(&pen);
 }
 
 
@@ -273,7 +277,23 @@ void CPractice5_1View::OnMouseMove(UINT nFlags, CPoint point)
 			m_ptPrev = point;
 		}
 		break;
+
+	case POLYGON_MODE:
+		if (m_bFirst = false)
+		{
+			dc.MoveTo(m_ptStart);
+			dc.LineTo(m_ptPrev);
+			dc.MoveTo(m_ptStart);
+			dc.LineTo(point);
+			m_ptPrev = point;
+		}
+		break;
 	}
+
+	dc.SelectObject(oldpen);
+	dc.SelectObject(oldbrush);
+	pen.DeleteObject();
+	brush.DeleteObject();
 
 
 
@@ -330,4 +350,46 @@ void CPractice5_1View::OnLButtonDown(UINT nFlags, CPoint point)
 	::ClipCursor(&rectClient);
 
 	CView::OnLButtonDown(nFlags, point);
+}
+
+
+void CPractice5_1View::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	if (m_bLButtonDown)
+	{
+		if (m_nDrawMode == LINE_MODE || m_nDrawMode == ELLIPSE_MODE)
+		{
+			m_bLButtonDown = false;
+			m_bFirst = true;
+			ReleaseCapture();
+			::ClipCursor(NULL);
+
+			Invalidate();
+		}
+	}
+
+	CView::OnLButtonUp(nFlags, point);
+}
+
+
+void CPractice5_1View::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	if (m_nDrawMode == POLYGON_MODE)
+	{
+		if (m_bFirst == false)
+		{
+			m_bContextMenu = false;
+
+			m_ptData[m_nCount];
+			m_nCount++;
+
+			m_bFirst = true;
+			ReleaseCapture();
+			::ClipCursor(NULL);
+
+			Invalidate();
+		}
+	}
+
+	CView::OnRButtonDown(nFlags, point);
 }
