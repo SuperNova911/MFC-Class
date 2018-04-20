@@ -112,11 +112,15 @@ BEGIN
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
     SEPARATOR
-    BUTTON      ID_EDIT_CUT
-    BUTTON      ID_EDIT_COPY
-    BUTTON      ID_EDIT_PASTE
-    SEPARATOR
     BUTTON      ID_FILE_PRINT
+    BUTTON      ID_LINE
+    BUTTON      ID_ELLIPSE
+    BUTTON      ID_POLYGON
+    BUTTON      ID_BEZIER
+    SEPARATOR
+    BUTTON      ID_LINE_COLOR
+    BUTTON      ID_FACE_COLOR
+    SEPARATOR
     BUTTON      ID_APP_ABOUT
 END
 
@@ -172,6 +176,7 @@ BEGIN
         MENUITEM "직선(&L)\tCtrl+L",              ID_LINE
         MENUITEM "원(&E)\tCtrl+E",               ID_ELLIPSE
         MENUITEM "다각형(&G)\tCtrl+G",             ID_POLYGON
+        MENUITEM "베지어 곡선(&B)\tCtrl+B",          ID_BEZIER
     END
     POPUP "색상(&C)"
     BEGIN
@@ -185,10 +190,6 @@ BEGIN
         MENUITEM "십자가(&C)",                     ID_CROSS
         MENUITEM "수직(&V)",                      ID_VERTICAL
     END
-    POPUP "프로그램 정보(&H)"
-    BEGIN
-        MENUITEM "Practice5_1 정보(&A)...",       ID_APP_ABOUT
-    END
 END
 
 IDR_POPUP_EDIT MENU
@@ -198,6 +199,7 @@ BEGIN
         MENUITEM "직선(&L)\tCtrl+L",              ID_LINE
         MENUITEM "원(&E)\tCtrl+E",               ID_ELLIPSE
         MENUITEM "다각형(&G)\tCtrl+G",             ID_POLYGON
+        MENUITEM "베지어 곡선(&B)\tCtrl+B",          ID_BEZIER
         MENUITEM SEPARATOR
         MENUITEM "선 색상(&N)",                    ID_LINE_COLOR
     END
@@ -233,15 +235,16 @@ BEGIN
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_ELLIPSE,             VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
     "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
-    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
-    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
     "L",            ID_LINE,                VIRTKEY, CONTROL, NOINVERT
-    "E",            ID_ELLIPSE,             VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     "G",            ID_POLYGON,             VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    "B",            ID_BEZIER,              VIRTKEY, CONTROL, NOINVERT
 END
 
 
@@ -455,22 +458,30 @@ END
 STRINGTABLE
 BEGIN
     IDS_EDIT_MENU           "편집"
+    ID_INDICATOR_POINT      "마우스:     x좌표     y좌표"
 END
 
 STRINGTABLE
 BEGIN
+    ID_32772                "원을 그립니다\n원 그리기"
     ID_LINE                 "직선을 그립니다.\n직선 그리기"
     ID_ELLIPSE              "원을 그립니다.\n원 그리기"
-    ID_POLYGON              "다각형을 그립니다.\n다각형 그리기"
+    ID_POLYGON              "다각형을 그립니다\n다각형 그리기"
+    ID_32778                "선 색상을 변경합니다.\n선 색상"
     ID_FACE_COLOR           "면 색상을 변경합니다.\n면 색상"
-    ID_LINE_COLOR           "선 색상을 변경합니다.\n선 색상"
-    ID_BDIAGONAL            "무늬를 변경합니다.\n왼쪽 45도"
-    ID_CROSS                "무늬를 변경합니다.\n십자가"
+    ID_LINE_COLOR           "선 색상를 변경합니다.\n선 색상"
 END
 
 STRINGTABLE
 BEGIN
+    ID_BDIAGONAL            "무늬를 변경합니다.\n왼쪽 45도"
+    ID_CROSS                "무늬를 변경합니다.\n십자가"
     ID_VERTICAL             "무늬를 변경합니다.\n수직"
+END
+
+STRINGTABLE
+BEGIN
+    ID_BEZIER               "베지어 곡선을 그립니다.\n베지어 곡선"
 END
 
 #endif    // 한국어(대한민국) resources

@@ -5,10 +5,6 @@
 
 #pragma once
 
-#ifndef _SECURE_ATL
-#define _SECURE_ATL 1
-#endif
-
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN            // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
 #endif

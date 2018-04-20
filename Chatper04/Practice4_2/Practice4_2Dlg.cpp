@@ -20,7 +20,9 @@ public:
 	CAboutDlg();
 
 // 대화 상자 데이터입니다.
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
+#endif
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
@@ -30,7 +32,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
 }
 
@@ -47,49 +49,42 @@ END_MESSAGE_MAP()
 
 
 
-
 CPractice4_2Dlg::CPractice4_2Dlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CPractice4_2Dlg::IDD, pParent)
+	: CDialogEx(IDD_PRACTICE4_2_DIALOG, pParent)
+	, m_strAMPM(_T(""))
+	, m_strDay(_T(""))
+	, m_strHour(_T(""))
+	, m_strMin(_T(""))
+	, m_strMonth(_T(""))
+	, m_strSec(_T(""))
+	, m_strYear(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	m_strYear = _T("");
-	//  m_strDay = _T("");
-	//  m_strHour = _T("");
-	m_strSecond = _T("");
-	//  m_strMonth = _T("");
-	m_strMonth = _T("");
-	m_strMinute = _T("");
-	m_strAMPM = _T("");
-	m_strDay = _T("");
-	m_strHour = _T("");
 }
 
 void CPractice4_2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT_YEAR, m_strYear);
-	//  DDX_Text(pDX, IDC_STATIC_DAY, m_strDay);
-	//  DDX_Text(pDX, IDC_STATIC_HOUR, m_strHour);
-	DDX_Text(pDX, IDC_EDIT_SECOND, m_strSecond);
-	//  DDX_Text(pDX, IDC_EDIT_MONTH, m_strMonth);
-	//  DDX_Control(pDX, IDC_EDIT_MINUTE, m_strMinute);
-	DDX_Text(pDX, IDC_EDIT_MONTH, m_strMonth);
-	DDX_Text(pDX, IDC_EDIT_MINUTE, m_strMinute);
 	DDX_Text(pDX, IDC_EDIT_AMPM, m_strAMPM);
 	DDX_Text(pDX, IDC_EDIT_DAY, m_strDay);
 	DDX_Text(pDX, IDC_EDIT_HOUR, m_strHour);
+	DDX_Text(pDX, IDC_EDIT_MINUTE, m_strMin);
+	DDX_Text(pDX, IDC_EDIT_MONTH, m_strMonth);
+	DDX_Text(pDX, IDC_EDIT_SECOND, m_strSec);
+	DDX_Text(pDX, IDC_EDIT_YEAR, m_strYear);
 }
 
 BEGIN_MESSAGE_MAP(CPractice4_2Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_EN_CHANGE(IDC_EDIT_MONTH, &CPractice4_2Dlg::OnEnChangeEditMonth)
 	ON_COMMAND(IDC_RADIO_12, &CPractice4_2Dlg::OnRadio12)
 	ON_COMMAND(IDC_RADIO_24, &CPractice4_2Dlg::OnRadio24)
-	ON_BN_CLICKED(IDC_CHECK_YEAR, &CPractice4_2Dlg::OnClickedCheckYear)
 	ON_BN_CLICKED(IDC_CHECK_HOUR, &CPractice4_2Dlg::OnClickedCheckHour)
-	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_CHECK_YEAR, &CPractice4_2Dlg::OnClickedCheckYear)
+//	ON_BN_CLICKED(IDC_BUTTON_HELP, &CPractice4_2Dlg::OnClickedButtonHelp)
+ON_BN_CLICKED(IDC_BUTTON_HELP, &CPractice4_2Dlg::OnClickedButtonHelp)
+ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -119,7 +114,7 @@ BOOL CPractice4_2Dlg::OnInitDialog()
 		}
 	}
 
-	// 이 대화 상자의 아이콘을 설정합니다. 응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
+	// 이 대화 상자의 아이콘을 설정합니다.  응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
@@ -127,18 +122,19 @@ BOOL CPractice4_2Dlg::OnInitDialog()
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	((CButton*)GetDlgItem(IDC_RADIO_12))->SetCheck(true);
 	((CButton*)GetDlgItem(IDC_CHECK_HOUR))->SetCheck(true);
-	
+
 	GetDlgItem(IDC_EDIT_YEAR)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_EDIT_MONTH)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_EDIT_DAY)->ShowWindow(SW_HIDE);
-	
+
 	GetDlgItem(IDC_STATIC_YEAR)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_STATIC_MONTH)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_STATIC_DAY)->ShowWindow(SW_HIDE);
 
-	m_bRadioClockType = true;
-	m_bCheckHour = true;
+	m_bRadioClock24 = false;
 	m_bCheckYear = false;
+	m_bCheckHour = true;
+	m_bViewHelp = false;
 
 	SetTimer(911, 1000, NULL);
 
@@ -159,7 +155,7 @@ void CPractice4_2Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 }
 
 // 대화 상자에 최소화 단추를 추가할 경우 아이콘을 그리려면
-//  아래 코드가 필요합니다. 문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
+//  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
 void CPractice4_2Dlg::OnPaint()
@@ -196,26 +192,15 @@ HCURSOR CPractice4_2Dlg::OnQueryDragIcon()
 
 
 
-void CPractice4_2Dlg::OnEnChangeEditMonth()
-{
-	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
-	// CDialogEx::OnInitDialog() 함수를 재지정 
-	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
-	// 이 알림 메시지를 보내지 않습니다.
-
-	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
-}
-
-
 void CPractice4_2Dlg::OnRadio12()
 {
-	m_bRadioClockType = true;
+	m_bRadioClock24 = false;
 }
 
 
 void CPractice4_2Dlg::OnRadio24()
 {
-	m_bRadioClockType = false;
+	m_bRadioClock24 = true;
 }
 
 
@@ -226,7 +211,7 @@ void CPractice4_2Dlg::OnClickedCheckYear()
 		GetDlgItem(IDC_EDIT_YEAR)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_EDIT_MONTH)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_EDIT_DAY)->ShowWindow(SW_SHOW);
-		
+
 		GetDlgItem(IDC_STATIC_YEAR)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_STATIC_MONTH)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_STATIC_DAY)->ShowWindow(SW_SHOW);
@@ -238,7 +223,7 @@ void CPractice4_2Dlg::OnClickedCheckYear()
 		GetDlgItem(IDC_EDIT_YEAR)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_EDIT_MONTH)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_EDIT_DAY)->ShowWindow(SW_HIDE);
-		
+
 		GetDlgItem(IDC_STATIC_YEAR)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_STATIC_MONTH)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_STATIC_DAY)->ShowWindow(SW_HIDE);
@@ -256,10 +241,10 @@ void CPractice4_2Dlg::OnClickedCheckHour()
 		GetDlgItem(IDC_EDIT_MINUTE)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_EDIT_SECOND)->ShowWindow(SW_SHOW);
 		GetDlgItem(IDC_EDIT_AMPM)->ShowWindow(SW_SHOW);
-		
+
 		GetDlgItem(IDC_STATIC_HOUR)->ShowWindow(SW_SHOW);
-		GetDlgItem(IDC_STATIC_MINUTE)->ShowWindow(SW_SHOW);
-		GetDlgItem(IDC_STATIC_SECOND)->ShowWindow(SW_SHOW);
+		GetDlgItem(IDC_STATIC_MIN)->ShowWindow(SW_SHOW);
+		GetDlgItem(IDC_STATIC_SEC)->ShowWindow(SW_SHOW);
 
 		m_bCheckHour = true;
 	}
@@ -269,12 +254,37 @@ void CPractice4_2Dlg::OnClickedCheckHour()
 		GetDlgItem(IDC_EDIT_MINUTE)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_EDIT_SECOND)->ShowWindow(SW_HIDE);
 		GetDlgItem(IDC_EDIT_AMPM)->ShowWindow(SW_HIDE);
-		
+
 		GetDlgItem(IDC_STATIC_HOUR)->ShowWindow(SW_HIDE);
-		GetDlgItem(IDC_STATIC_MINUTE)->ShowWindow(SW_HIDE);
-		GetDlgItem(IDC_STATIC_SECOND)->ShowWindow(SW_HIDE);
+		GetDlgItem(IDC_STATIC_MIN)->ShowWindow(SW_HIDE);
+		GetDlgItem(IDC_STATIC_SEC)->ShowWindow(SW_HIDE);
 
 		m_bCheckHour = false;
+	}
+}
+
+void CPractice4_2Dlg::OnClickedButtonHelp()
+{
+	if (m_bViewHelp == false)
+	{
+		m_dlgClockHelp.Create(IDD_DIALOG_HELP, this);
+
+		CRect rectMain, rectHelp;
+		GetWindowRect(&rectMain);
+
+		m_dlgClockHelp.GetWindowRect(&rectHelp);
+		m_dlgClockHelp.MoveWindow(rectMain.right, rectMain.top, rectHelp.Width(), rectHelp.Height());
+
+		m_dlgClockHelp.ShowWindow(SW_SHOW);
+
+		m_bViewHelp = true;
+	}
+	else
+	{
+		m_dlgClockHelp.ShowWindow(SW_HIDE);
+		m_dlgClockHelp.DestroyWindow();
+
+		m_bViewHelp = false;
 	}
 }
 
@@ -284,30 +294,34 @@ void CPractice4_2Dlg::OnTimer(UINT_PTR nIDEvent)
 	int hour;
 	CTime timer;
 	timer = CTime::GetCurrentTime();
-	
+
 	m_strYear.Format(TEXT("%d"), timer.GetYear());
 	m_strMonth.Format(TEXT("%d"), timer.GetMonth());
 	m_strDay.Format(TEXT("%d"), timer.GetDay());
 
 	hour = timer.GetHour();
-	if (m_bRadioClockType)
+
+	if (m_bRadioClock24 == true)
+	{
+		m_strAMPM.Empty();
+	}
+	else
 	{
 		if (hour >= 12)
 		{
 			m_strAMPM = TEXT("PM");
-			if (hour > 12)
-				hour -= 12;
+			hour -= 12;
 		}
 		else
+		{
 			m_strAMPM = TEXT("AM");
+		}
 	}
-	else
-		m_strAMPM.Empty();
-	
+
 	m_strHour.Format(TEXT("%d"), hour);
-	m_strMinute.Format(TEXT("%d"), timer.GetMinute());
-	m_strSecond.Format(TEXT("%d"), timer.GetSecond());
-	
+	m_strMin.Format(TEXT("%d"), timer.GetMinute());
+	m_strSec.Format(TEXT("%d"), timer.GetSecond());
+
 	UpdateData(false);
 
 	CDialogEx::OnTimer(nIDEvent);

@@ -30,6 +30,7 @@ END_MESSAGE_MAP()
 static UINT indicators[] =
 {
 	ID_SEPARATOR,           // 상태 줄 표시기
+	ID_INDICATOR_POINT,
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
@@ -40,7 +41,7 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
-	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2008);
+	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_OFF_2003);
 }
 
 CMainFrame::~CMainFrame()
@@ -91,6 +92,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 만들지 못했습니다.
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
+	m_wndStatusBar.SetPaneInfo(1, ID_INDICATOR_POINT, SBPS_NORMAL, 200);
 
 	// TODO: 도구 모음 및 메뉴 모음을 도킹할 수 없게 하려면 이 다섯 줄을 삭제하십시오.
 	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
@@ -104,8 +106,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CDockingManager::SetDockingMode(DT_SMART);
 	// Visual Studio 2005 스타일 도킹 창 자동 숨김 동작을 활성화합니다.
 	EnableAutoHidePanes(CBRS_ALIGN_ANY);
-	// 보관된 값에 따라 비주얼 관리자 및 스타일을 설정합니다.
-	OnApplicationLook(theApp.m_nAppLook);
 
 	// 도구 모음 및 도킹 창 메뉴 바꾸기를 활성화합니다.
 	EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);

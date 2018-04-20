@@ -1,8 +1,7 @@
 
 // Practice5_1View.h : CPractice5_1View 클래스의 인터페이스
 //
-enum DRAW_MODE { LINE_MODE, ELLIPSE_MODE, POLYGON_MODE };
-
+enum DRAW_MODE { LINE_MODE, ELLIPSE_MODE, POLYGON_MODE, BEZIER_MODE };
 #pragma once
 
 
@@ -53,11 +52,27 @@ public:
 	afx_msg void OnBdiagonal();
 	afx_msg void OnCross();
 	afx_msg void OnVertical();
-	int m_nHatchStyle;
 	int m_nDrawMode;
+	int m_nHatchStyle;
 	afx_msg void OnUpdateLine(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateEllipse(CCmdUI *pCmdUI);
 	afx_msg void OnUpdatePolygon(CCmdUI *pCmdUI);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	CPoint m_ptStart;
+	CPoint m_ptPrev;
+	bool m_bFirst;
+	bool m_bLButtonDown;
+	bool m_bHatch;
+	bool m_bContextMenu;
+	CPoint m_ptData[50];
+	int m_nCount;
+	COLORREF m_colorPen;
+	COLORREF m_colorBrush;
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnBezier();
+	afx_msg void OnUpdateBezier(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // Practice5_1View.cpp의 디버그 버전

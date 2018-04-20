@@ -14,7 +14,9 @@ public:
 	CPractice4_1Dlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PRACTICE4_1_DIALOG };
+#endif
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
@@ -31,13 +33,10 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-//	CString m_strDeit;
 	CString m_strEdit;
-//	CListBox m_cbListItem;
 	CListBox m_listBox;
 	CComboBox m_cbListItem;
-//	virtual HRESULT accDoDefaultAction(VARIANT varChild);
-	void UpdateComboBox(void);
+	void UpdateComboBox();
 	afx_msg void OnRadio1();
 	afx_msg void OnRadio2();
 	bool m_bChecked[2];

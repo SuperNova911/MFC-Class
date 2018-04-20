@@ -20,7 +20,9 @@ public:
 	CAboutDlg();
 
 // 대화 상자 데이터입니다.
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
+#endif
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
@@ -30,7 +32,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 {
 }
 
@@ -47,12 +49,11 @@ END_MESSAGE_MAP()
 
 
 
-
 CPractice4_1Dlg::CPractice4_1Dlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CPractice4_1Dlg::IDD, pParent)
+	: CDialogEx(IDD_PRACTICE4_1_DIALOG, pParent)
+	, m_strEdit(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	m_strEdit = _T("");
 	m_bChecked[0] = m_bChecked[1] = false;
 }
 
@@ -104,7 +105,7 @@ BOOL CPractice4_1Dlg::OnInitDialog()
 		}
 	}
 
-	// 이 대화 상자의 아이콘을 설정합니다. 응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
+	// 이 대화 상자의 아이콘을 설정합니다.  응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
@@ -128,7 +129,7 @@ void CPractice4_1Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 }
 
 // 대화 상자에 최소화 단추를 추가할 경우 아이콘을 그리려면
-//  아래 코드가 필요합니다. 문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
+//  아래 코드가 필요합니다.  문서/뷰 모델을 사용하는 MFC 응용 프로그램의 경우에는
 //  프레임워크에서 이 작업을 자동으로 수행합니다.
 
 void CPractice4_1Dlg::OnPaint()
@@ -165,15 +166,7 @@ HCURSOR CPractice4_1Dlg::OnQueryDragIcon()
 
 
 
-//HRESULT CPractice4_1Dlg::accDoDefaultAction(VARIANT varChild)
-//{
-//	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
-//
-//	return CDialogEx::accDoDefaultAction(varChild);
-//}
-
-
-void CPractice4_1Dlg::UpdateComboBox(void)
+void CPractice4_1Dlg::UpdateComboBox()
 {
 	int nCnt = m_listBox.GetCount();
 	m_cbListItem.ResetContent();
@@ -203,15 +196,15 @@ void CPractice4_1Dlg::OnRadio2()
 
 void CPractice4_1Dlg::OnClickedCheck1()
 {
-	if (m_bChecked[0] == false)
+	if (m_bChecked[0] = false)
 	{
 		m_bChecked[0] = true;
-		m_listBox.AddString(TEXT("1번 체크 박스 상태 TRUE"));
+		m_listBox.AddString(TEXT("1번 체크박스 true"));
 	}
 	else
 	{
 		m_bChecked[0] = false;
-		m_listBox.AddString(TEXT("1번 체크 박스 상태 FALSE"));
+		m_listBox.AddString(TEXT("1번 체크박스 false"));
 	}
 
 	UpdateComboBox();
@@ -220,15 +213,15 @@ void CPractice4_1Dlg::OnClickedCheck1()
 
 void CPractice4_1Dlg::OnClickedCheck2()
 {
-	if (m_bChecked[1] == false)
+	if (m_bChecked[1] = false)
 	{
 		m_bChecked[1] = true;
-		m_listBox.AddString(TEXT("2번 체크 박스 상태 TRUE"));
+		m_listBox.AddString(TEXT("1번 체크박스 true"));
 	}
 	else
 	{
 		m_bChecked[1] = false;
-		m_listBox.AddString(TEXT("2번 체크 박스 상태 FALSE"));
+		m_listBox.AddString(TEXT("1번 체크박스 false"));
 	}
 
 	UpdateComboBox();
@@ -237,7 +230,7 @@ void CPractice4_1Dlg::OnClickedCheck2()
 
 void CPractice4_1Dlg::OnClickedButtonAdd()
 {
-	UpdateData(TRUE);
+	UpdateData(true);
 
 	if (m_strEdit.IsEmpty() == false)
 	{
@@ -246,17 +239,36 @@ void CPractice4_1Dlg::OnClickedButtonAdd()
 	}
 	else
 	{
-		AfxMessageBox(TEXT("에디트 상자에 문자열이 없습니다."));
+		AfxMessageBox(TEXT("에디트 상자에 문자열 없음"));
 	}
 
 	UpdateData(false);
+	
 	UpdateComboBox();
+}
+
+
+void CPractice4_1Dlg::OnClickedButtonDelete()
+{
+	int index = m_cbListItem.GetCurSel();
+
+	if (index != CB_ERR)
+	{
+		m_listBox.DeleteString(index);
+
+		UpdateComboBox();
+	}
+	else
+	{
+		AfxMessageBox(TEXT("콤보박스 선택하세요"));
+	}
 }
 
 
 void CPractice4_1Dlg::OnClickedButtonInsert()
 {
 	CString strSelText;
+
 	int index = m_cbListItem.GetCurSel();
 
 	if (index != CB_ERR)
@@ -268,25 +280,6 @@ void CPractice4_1Dlg::OnClickedButtonInsert()
 	}
 	else
 	{
-		AfxMessageBox(TEXT("콤보 박스에서 삽입할 아이템을 선택하세요."));
+		AfxMessageBox(TEXT("콤보 박스에서 선택하세요"));
 	}
-
 }
-
-
-void CPractice4_1Dlg::OnClickedButtonDelete()
-{
-	int index = m_cbListItem.GetCurSel();
-
-	if (index != CB_ERR)
-	{
-		m_listBox.DeleteString(index);
-		UpdateComboBox();
-	}
-	else
-	{
-		AfxMessageBox(TEXT("콤보 박스에서 삭제할 아이템을 선택하세요."));
-	}
-
-}
-

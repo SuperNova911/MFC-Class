@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "ClockHelpDlg.h"
 
 
 // CPractice4_2Dlg 대화 상자
@@ -13,7 +14,9 @@ public:
 	CPractice4_2Dlg(CWnd* pParent = NULL);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
+#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_PRACTICE4_2_DIALOG };
+#endif
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
@@ -30,24 +33,24 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnEnChangeEditMonth();
-	CString m_strYear;
-//	CString m_strDay;
-//	CString m_strHour;
-	CString m_strSecond;
-//	CString m_strMonth;
-//	CEdit m_strMinute;
-	CString m_strMonth;
-	CString m_strMinute;
 	CString m_strAMPM;
 	CString m_strDay;
 	CString m_strHour;
-	bool m_bRadioClockType;
+	CString m_strMin;
+	CString m_strMonth;
+	CString m_strSec;
+	CString m_strYear;
 	afx_msg void OnRadio12();
 	afx_msg void OnRadio24();
+	afx_msg void OnClickedCheckHour();
+	afx_msg void OnClickedCheckYear();
+//	afx_msg void OnClickedButtonHelp();
+//	bool m_bRadioClockType;
 	bool m_bCheckYear;
 	bool m_bCheckHour;
-	afx_msg void OnClickedCheckYear();
-	afx_msg void OnClickedCheckHour();
+	bool m_bRadioClock24;
+	afx_msg void OnClickedButtonHelp();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	bool m_bViewHelp;
+	CClockHelpDlg m_dlgClockHelp;
 };
