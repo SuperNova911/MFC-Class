@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3C676E0D-7536-4EBF-98D8-3AB8071B9AA7}</ProjectGuid>
-    <RootNamespace>Exercise1</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectGuid>{0561F8D0-DFCA-48BA-ACC4-101655D98110}</ProjectGuid>
+    <RootNamespace>Practice4_1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -185,15 +185,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Exercise1.h" />
-    <ClInclude Include="Exercise1Dlg.h" />
+    <ClInclude Include="Practice4_1.h" />
+    <ClInclude Include="Practice4_1Dlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Exercise1.cpp" />
-    <ClCompile Include="Exercise1Dlg.cpp" />
+    <ClCompile Include="Practice4_1.cpp" />
+    <ClCompile Include="Practice4_1Dlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -202,20 +202,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Exercise1.rc" />
+    <ResourceCompile Include="Practice4_1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Exercise1.rc2" />
+    <None Include="res\Practice4_1.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\Exercise1.ico" />
+    <Image Include="res\Practice4_1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="Exercise1.rc" />
+      <UserProperties RESOURCE_FILE="Practice4_1.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

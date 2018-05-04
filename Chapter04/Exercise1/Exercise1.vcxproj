@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5454BF64-5172-4A15-A656-1D365E4CF8D0}</ProjectGuid>
-    <RootNamespace>Practice4_2</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectGuid>{3C676E0D-7536-4EBF-98D8-3AB8071B9AA7}</ProjectGuid>
+    <RootNamespace>Exercise1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -185,17 +185,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClockHelpDlg.h" />
-    <ClInclude Include="Practice4_2.h" />
-    <ClInclude Include="Practice4_2Dlg.h" />
+    <ClInclude Include="Exercise1.h" />
+    <ClInclude Include="Exercise1Dlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClockHelpDlg.cpp" />
-    <ClCompile Include="Practice4_2.cpp" />
-    <ClCompile Include="Practice4_2Dlg.cpp" />
+    <ClCompile Include="Exercise1.cpp" />
+    <ClCompile Include="Exercise1Dlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -204,20 +202,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Practice4_2.rc" />
+    <ResourceCompile Include="Exercise1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Practice4_2.rc2" />
+    <None Include="res\Exercise1.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\Practice4_2.ico" />
+    <Image Include="res\Exercise1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="Practice4_2.rc" />
+      <UserProperties RESOURCE_FILE="Exercise1.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
